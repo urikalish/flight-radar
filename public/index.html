@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div id="app">
+    <header>
+        <button data-action="start-update">Start</button>
+        <button data-action="stop-update">Stop</button>
+    </header>
+    <main>
+        <section>
+            <div id="map-container" class="map-container visibility--hidden">
+                <div id="map" class="map"></div>
+                <button id="btn-zoom-in" class="btn-zoom btn-zoom-in" data-action="zoom-in">+</button>
+                <button id="btn-zoom-out" class="btn-zoom btn-zoom-out" data-action="zoom-out">-</button>
+                <div id="info-pane" class="info-pane display--none"></div>
+            </div>
+        </section>
+    </main>
+</div>
+<script>
+    function initMap() {
+        setTimeout(() => {
+            window.app.initMap();
+        }, 0);
+    }
+</script>
+<script type="module" src="/js/index.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiKGzPJHlTPnxnSk4YaMLadKI8iUV4B8g&loading=async&callback=initMap&libraries=maps,marker"></script>
+</body>
+</html>

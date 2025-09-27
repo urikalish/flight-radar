@@ -1,0 +1,9 @@
+{
+  "watch": ["src/server", ".env"],
+  "ext": "ts,js",
+  "ignore": ["src/client/**/*", "dist/**/*", "dist-client/**/*", "node_modules/**/*"],
+  "exec": "tsc -p tsconfig.server.json && node dist/index.js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

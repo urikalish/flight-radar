@@ -1,0 +1,121 @@
+.map-container {
+    position: relative;
+}
+
+.map {
+   /*border-radius: 50%;*/
+}
+
+img[alt="Google"] {
+    display: none;
+}
+
+.gmnoprint {
+    display: none;
+}
+
+.angle-marker {
+    position: absolute;
+    font-family: var(--font-mono), monospace;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-green--grayish);
+    text-align: center;
+    width: 30px;
+    height: 20px;
+    line-height: 20px;
+    transform-origin: center center;
+    user-select: none;
+}
+
+.map-marker-airport {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: var(--color-gray--darker);
+}
+
+.map-marker-flight {
+    --rotation: 0deg;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-gray--lighter);
+}
+.map-marker-flight.selected {
+    background-color: var(--color-selected);
+}
+
+.map-marker-flight::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 15px;
+    transform: rotate(var(--rotation));
+    transform-origin: top left;
+    background-color: var(--color-gray--lighter);
+}
+.map-marker-flight.selected::before {
+    background-color: var(--color-selected);
+}
+
+.map-marker-flight::after {
+    content: attr(data-info-line1) "\A" attr(data-info-line2);
+    position: absolute;
+    top: -19px;
+    font-size: 10px;
+    line-height: 9px;
+    font-family: var(--font-mono), monospace;
+    white-space: pre;
+    color: var(--color-green--light);
+}
+.map-marker-flight.selected::after {
+    color: var(--color-selected);
+}
+
+.btn {
+    width: 48px;
+    height: 32px;
+    outline: none !important;
+    border:1px solid var(--color-green--light);
+    border-radius: 4px;
+    background-color: transparent;
+    backdrop-filter: blur(8px);
+    color: var(--color-green--light);
+    font-size: 12px;
+    user-select: none;
+}
+
+.btn-zoom {
+    position: absolute;
+    right: 16px;
+    width: 48px;
+    height: 32px;
+}
+
+.btn-zoom-in {
+    top: 16px;
+}
+
+.btn-zoom-out {
+    top: 64px;
+}
+
+.info-pane {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    padding: 8px 12px;
+    border:1px solid var(--color-green--light);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    color: var(--color-green--light);
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    white-space: pre-line;
+    cursor: pointer;
+    user-select: none;
+}

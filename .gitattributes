@@ -1,0 +1,48 @@
+# Ensure all text files use LF line endings
+* text=auto eol=lf
+
+# Explicitly declare text files
+*.js text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+*.svg text eol=lf
+*.xml text eol=lf
+*.sh text eol=lf
+*.env text eol=lf
+*.example text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.eslintrc text eol=lf
+.prettierrc text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.tgz binary
+*.jar binary
+*.war binary
+*.ear binary
+*.dll binary
+*.exe binary
+*.so binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

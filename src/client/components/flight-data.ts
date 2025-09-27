@@ -1,0 +1,20 @@
+export type FlightData = {
+    icao24: string;
+    callsign: string;
+    originCountry: string;
+    timePosition: number | null;
+    lastContact: number;
+    longitude: number | null;
+    latitude: number | null;
+    baroAltitude: number | null;
+    onGround: boolean;
+    velocity: number | null;
+    trueTrack: number | null;
+    verticalRate: number | null;
+    sensors: number[];
+    geoAltitude: number | null;
+    squawk: string;
+    spi: boolean;
+    positionSource: number;
+    category: number;
+};

@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2018",
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
+    "outDir": "./dist-client",
+    "rootDir": "./src/client",
+    "jsx": "preserve",
+  },
+  "include": ["src/client/**/*"],
+  "exclude": ["src/server/**/*"]
+}
