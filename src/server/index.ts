@@ -11,7 +11,7 @@ import { apiRouter } from './routes/api';
 dotenv.config();
 
 const app: Application = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 7879;
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Type-safe middleware wrapper
