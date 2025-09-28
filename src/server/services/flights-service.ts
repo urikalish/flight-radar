@@ -88,7 +88,7 @@ export class FlightsService {
                 },
             });
             const remainingCredits = response.headers.get('x-rate-limit-remaining');
-            console.info(remainingCredits);
+            console.info(`OpenSky credits: ${remainingCredits}`);
         } catch (error) {
             console.error(error);
         }
