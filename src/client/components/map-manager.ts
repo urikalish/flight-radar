@@ -186,8 +186,7 @@ export class MapManager {
             `Callsign: ${f.callsign}`,
             `Altitude: ${altStr} ${vrStr}`,
             `Position: ${f.latitude}, ${f.longitude}`,
-            `Track: ${trackStr}`,
-            `Speed: ${speedStr}`,
+            `Track / Speed: ${trackStr} / ${speedStr}`,
             `Registration: ${f.originCountry}`,
         ];
         elm.textContent = infoLines.join('\n');
