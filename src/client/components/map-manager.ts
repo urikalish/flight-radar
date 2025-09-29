@@ -177,14 +177,18 @@ export class MapManager {
         this.trackedFlightICAO24 = f.icao24;
         m.element.classList.add('selected');
         const elm = document.getElementById('info-pane') as HTMLDivElement;
+        const altStr = `${Math.round((f.baroAltitude ?? 0) * Units.METERS_TO_FEET)} ft`;
         const vr = Math.round((f.verticalRate ?? 0) * Units.METERS_TO_FEET);
         const vrStr = vr === 0 ? '' : vr > 0 ? `+${vr} ft/min` : `${vr} ft/min`;
+        const trackStr = `${f.trueTrack ? Math.round(f.trueTrack) : 'N/A'}°`;
+        const speedStr = `${Math.round((f.velocity ?? 0) * Units.METERS_PER_SECOND_TO_KNOTS)} kts`;
         const infoLines = [
-            `Callsign: ${f.callsign} (${f.originCountry})`,
-            `Altitude: ${Math.round((f.baroAltitude ?? 0) * Units.METERS_TO_FEET)} ft ${vrStr}`,
+            `Callsign: ${f.callsign}`,
+            `Altitude: ${altStr} ${vrStr}`,
             `Position: ${f.latitude}, ${f.longitude}`,
-            `Heading: ${f.trueTrack ? Math.round(f.trueTrack) : 'N/A'}°`,
-            `Speed: ${Math.round((f.velocity ?? 0) * Units.METERS_PER_SECOND_TO_KNOTS)} kts`,
+            `Track: ${trackStr}`,
+            `Speed: ${speedStr}`,
+            `Registration: ${f.originCountry}`,
         ];
         elm.textContent = infoLines.join('\n');
         elm.classList.remove('display--none');
