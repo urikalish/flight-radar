@@ -106,50 +106,68 @@ export class MapManager {
         }
     }
 
-    private clearFlightsMarkers() {
-        this.flightsMarkers.forEach((m) => {
-            google.maps.event.clearInstanceListeners(m);
-            m.map = null;
-        });
-        this.flightsMarkers.clear();
+    private updateFlightMarker(f: FlightData, m: google.maps.marker.AdvancedMarkerElement) {
+        m.position = { lat: f.latitude ?? 0, lng: f.longitude ?? 0 };
+        m.title = `${f.callsign} (${f.originCountry})`;
+        if (f.trueTrack !== null) {
+            const rotation = Math.round(Number(f.trueTrack)) + this.ROTATION_OFFSET;
+            m.element.style.setProperty('--rotation', `${rotation}deg`);
+        }
+        const altInfo = Helper.to3Digits(
+            Math.round(((f.baroAltitude ?? 0) * Units.METERS_TO_FEET) / 100)
+        );
+        let climbArrow = '';
+        if (f.verticalRate && f.verticalRate !== 0) {
+            climbArrow = f.verticalRate > 0 ? '↑' : '↓';
+        }
+        const speedInfo = Helper.to3Digits(
+            Math.round((f.velocity ?? 0) * Units.METERS_PER_SECOND_TO_KNOTS)
+        );
+        m.element.dataset.infoLine1 = f.callsign || '???';
+        m.element.dataset.infoLine2 = `${altInfo}${climbArrow} ${speedInfo}`;
     }
 
-    private createFlightsMarkers(flights: FlightData[]) {
-        flights.forEach((f) => {
-            const m = new google.maps.marker.AdvancedMarkerElement({
-                position: { lat: f.latitude ?? 0, lng: f.longitude ?? 0 },
-                map: this.map,
-                content: document.createElement('div'),
-                title: `${f.callsign} (${f.originCountry})`,
-            });
-            if (f.trueTrack !== null) {
-                const rotation = Math.round(Number(f.trueTrack)) + this.ROTATION_OFFSET;
-                m.element.style.setProperty('--rotation', `${rotation}deg`);
-            }
-            const altInfo = Helper.to3Digits(
-                Math.round(((f.baroAltitude ?? 0) * Units.METERS_TO_FEET) / 100)
-            );
-            let climbArrow = '';
-            if (f.verticalRate && f.verticalRate !== 0) {
-                climbArrow = f.verticalRate > 0 ? '↑' : '↓';
-            }
-            const speedInfo = Helper.to3Digits(
-                Math.round((f.velocity ?? 0) * Units.METERS_PER_SECOND_TO_KNOTS)
-            );
-            m.element.dataset.infoLine1 = f.callsign || '???';
-            m.element.dataset.infoLine2 = `${altInfo}${climbArrow} ${speedInfo}`;
-            m.element.classList.add('map-marker-flight');
-            m.addListener('click', () => {
-                this.handleFlightClicked(f, m);
-            });
-            this.flightsMarkers.set(f.icao24, m);
+    private removeFlightMarker(icao24: string) {
+        const m = this.flightsMarkers.get(icao24);
+        if (m) {
+            google.maps.event.clearInstanceListeners(m);
+            m.map = null;
+            this.flightsMarkers.delete(icao24);
+        }
+    }
+
+    private createFlightMarker(f: FlightData): google.maps.marker.AdvancedMarkerElement {
+        const m = new google.maps.marker.AdvancedMarkerElement({
+            map: this.map,
+            content: document.createElement('div'),
         });
+        m.element.classList.add('map-marker-flight');
+        this.updateFlightMarker(f, m);
+        m.addListener('click', () => {
+            this.handleFlightClicked(f, m);
+        });
+        return m;
     }
 
     public updateFlights(flights: FlightData[]) {
         if (!this.map) return;
-        this.clearFlightsMarkers();
-        this.createFlightsMarkers(flights);
+        const flightsToRemove = new Set<string>();
+        for (const icao24 of this.flightsMarkers.keys()) {
+            flightsToRemove.add(icao24);
+        }
+        flights.forEach((f) => {
+            const existingMarker = this.flightsMarkers.get(f.icao24);
+            if (existingMarker) {
+                this.updateFlightMarker(f, existingMarker);
+                flightsToRemove.delete(f.icao24);
+            } else {
+                const newMarker = this.createFlightMarker(f);
+                this.flightsMarkers.set(f.icao24, newMarker);
+            }
+        });
+        flightsToRemove.forEach((icao24: string) => {
+            this.removeFlightMarker(icao24);
+        });
         const trackedFlight = flights.find((f) => f.icao24 === this.trackedFlightICAO24);
         if (trackedFlight) {
             const m = this.flightsMarkers.get(trackedFlight.icao24);

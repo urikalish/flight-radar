@@ -41,6 +41,7 @@ img[alt="Google"] {
     height: 7px;
     border-radius: 50%;
     background-color: var(--color-gray--lighter);
+    transition: all 100ms linear;
 }
 .map-marker-flight.selected {
     background-color: var(--color-selected);
