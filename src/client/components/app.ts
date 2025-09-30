@@ -5,6 +5,7 @@ export class App {
     private readonly FLIGHTS_REFRESH_INITIAL_INTERVAL_SECS = 60;
     private flightsRefreshIntervalSecs = this.FLIGHTS_REFRESH_INITIAL_INTERVAL_SECS;
     private isInitialized: boolean = false;
+    private refreshFlightsTimeoutId = 0;
     private mapManager: MapManager;
     private flightsManager: FlightsManager;
 
@@ -15,7 +16,7 @@ export class App {
 
     public initMap() {
         this.mapManager.initMap();
-        this.updateFlights().then(() => {});
+        this.refreshFlights().then(() => {});
     }
 
     public initialize(): void {
@@ -57,6 +58,7 @@ export class App {
     private handleChangeRefreshFrequency(event: Event) {
         if (event) {
             this.updateRefreshFrequency(Number((event.target as HTMLInputElement).value));
+            this.refreshFlights().then(() => {});
         }
     }
 
@@ -85,7 +87,10 @@ export class App {
         }
     }
 
-    public async updateFlights() {
+    public async refreshFlights() {
+        if (this.refreshFlightsTimeoutId) {
+            clearTimeout(this.refreshFlightsTimeoutId);
+        }
         try {
             const flights = await this.flightsManager.fetchFlights(
                 this.mapManager.mapCenterPoint.lat,
@@ -96,8 +101,8 @@ export class App {
         } catch (error) {
             console.error('Failed to update flights:', error);
         }
-        window.setTimeout(() => {
-            this.updateFlights().then(() => {});
+        this.refreshFlightsTimeoutId = window.setTimeout(() => {
+            this.refreshFlights().then(() => {});
         }, this.flightsRefreshIntervalSecs * 1000);
     }
 }
