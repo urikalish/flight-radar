@@ -40,3 +40,9 @@ main {
     display: grid;
     justify-content: center;
 }
+
+.refresh-frequency-label {}
+
+.refresh-frequency-input {
+    width: 200px;
+}

@@ -12,8 +12,10 @@
 <body>
 <div id="app">
     <header>
-        <button data-action="start-update">Start</button>
-        <button data-action="stop-update">Stop</button>
+<!--        <button data-action="start-update">Start</button>-->
+<!--        <button data-action="stop-update">Stop</button>-->
+        <div><label for="refreshFrequencyInput" class="refresh-frequency-label">Refresh frequency (sec): <span id="refreshFrequencyValue"></span></label></div>
+        <div><input type="range" id="refreshFrequencyInput" min="5" max="60" step="5" class="refresh-frequency-input"></div>
     </header>
     <main>
         <section>
