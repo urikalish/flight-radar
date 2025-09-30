@@ -10,7 +10,8 @@ img[alt="Google"] {
     display: none;
 }
 
-.gmnoprint {
+.gmnoprint,
+.gm-style-cc {
     display: none;
 }
 
