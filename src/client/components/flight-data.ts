@@ -17,4 +17,7 @@ export type FlightData = {
     spi: boolean;
     positionSource: number;
     category: number;
+    planeRegistration: string;
+    planeTypeCode: string;
+    planeModel: string;
 };

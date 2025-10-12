@@ -200,12 +200,15 @@ export class MapManager {
         const vrStr = vr === 0 ? '' : vr > 0 ? `+${vr} ft/min` : `${vr} ft/min`;
         const trackStr = `${f.trueTrack ? Math.round(f.trueTrack) : 'N/A'}°`;
         const speedStr = `${Math.round((f.velocity ?? 0) * Units.METERS_PER_SECOND_TO_KNOTS)} kts`;
+        const registrationStr = `${f.planeRegistration} ${f.originCountry}`.trim() || 'N/A';
+        const modelStr = `${f.planeTypeCode} ${f.planeModel}`.trim() || 'N/A';
         const infoLines = [
             `Callsign: ${f.callsign}`,
+            `Registration: ${registrationStr}`,
+            `Model: ${modelStr}`,
             `Altitude: ${altStr} ${vrStr}`,
             `Position: ${f.latitude}, ${f.longitude}`,
             `Track / Speed: ${trackStr} / ${speedStr}`,
-            `Registration: ${f.originCountry}`,
         ];
         elm.textContent = infoLines.join('\n');
         elm.classList.remove('display--none');

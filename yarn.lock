@@ -865,6 +865,11 @@ cross-spawn@^7.0.6:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+csv-parser@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/csv-parser/-/csv-parser-3.2.0.tgz#7e5515e3763e963dc8660dc9dcfc3f0eaf72b0a9"
+  integrity sha512-fgKbp+AJbn1h2dcAHKIdKNSSjfp43BZZykXsCjzALjKy80VXQNHPFJ6T9Afwdzoj24aMkq8GwDS7KGcDPpejrA==
+
 date-fns@^2.30.0:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"

@@ -1,3 +1,6 @@
+import type { PlaneData } from './planes-service';
+import { PlanesService } from './planes-service';
+
 type FlightData = {
     icao24: string;
     callsign: string;
@@ -17,6 +20,9 @@ type FlightData = {
     spi: boolean;
     positionSource: number;
     category: number;
+    planeRegistration: string;
+    planeTypeCode: string;
+    planeModel: string;
 };
 
 export class FlightsService {
@@ -27,6 +33,11 @@ export class FlightsService {
     openSkyAuthToken: string = '';
     openSkyAuthTokenFetchTime: number = 0;
     OPENSKY_AUTH_TOKEN_CACHE_MS = 25 * 60 * 1000;
+    planesService: PlanesService = new PlanesService();
+
+    constructor() {
+        this.planesService.loadData();
+    }
 
     async getOpenSkyAuthToken(): Promise<string> {
         try {
@@ -143,26 +154,33 @@ export class FlightsService {
             console.error(`Error missing flights data from OpenSky`);
             return [];
         }
-        let flights: FlightData[] = responseData.states.map((f: any) => ({
-            icao24: f[0],
-            callsign: f[1]?.trim(),
-            originCountry: f[2],
-            timePosition: f[3],
-            lastContact: f[4],
-            longitude: f[5],
-            latitude: f[6],
-            baroAltitude: f[7],
-            onGround: f[8],
-            velocity: f[9],
-            trueTrack: f[10],
-            verticalRate: f[11],
-            sensors: f[12],
-            geoAltitude: f[13],
-            squawk: f[14],
-            spi: f[15],
-            positionSource: f[16],
-            category: f[17],
-        }));
+        let flights: FlightData[] = responseData.states.map((f: any) => {
+            const icao24 = f[0];
+            const planeData: PlaneData | null = this.planesService.getPlaneData(icao24);
+            return {
+                icao24,
+                callsign: f[1]?.trim(),
+                originCountry: f[2],
+                timePosition: f[3],
+                lastContact: f[4],
+                longitude: f[5],
+                latitude: f[6],
+                baroAltitude: f[7],
+                onGround: f[8],
+                velocity: f[9],
+                trueTrack: f[10],
+                verticalRate: f[11],
+                sensors: f[12],
+                geoAltitude: f[13],
+                squawk: f[14],
+                spi: f[15],
+                positionSource: f[16],
+                category: f[17],
+                planeRegistration: planeData?.planeRegistration || '',
+                planeTypeCode: planeData?.planeTypeCode || '',
+                planeModel: planeData?.planeModel || '',
+            };
+        });
         flights = flights.filter((f) => !f.onGround);
         this.flightsCache.set(url, { ts: Date.now(), data: flights });
         console.info(`${flights.length} flights retrieved from OpenSky`);
