@@ -203,12 +203,12 @@ export class MapManager {
         const registrationStr = `${f.planeRegistration} ${f.originCountry}`.trim() || 'N/A';
         const modelStr = `${f.planeTypeCode} ${f.planeModel}`.trim() || 'N/A';
         const infoLines = [
-            `Callsign: ${f.callsign}`,
-            `Registration: ${registrationStr}`,
+            `Call/ICAO24: ${f.callsign} / ${f.icao24}`,
+            `Reg: ${registrationStr}`,
             `Model: ${modelStr}`,
             `Altitude: ${altStr} ${vrStr}`,
             `Position: ${f.latitude}, ${f.longitude}`,
-            `Track / Speed: ${trackStr} / ${speedStr}`,
+            `Track/Speed: ${trackStr} / ${speedStr}`,
         ];
         elm.textContent = infoLines.join('\n');
         elm.classList.remove('display--none');
