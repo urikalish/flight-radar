@@ -206,9 +206,9 @@ export class MapManager {
             `Call/ICAO24: ${f.callsign} / ${f.icao24}`,
             `Reg: ${registrationStr}`,
             `Model: ${modelStr}`,
-            `Altitude: ${altStr} ${vrStr}`,
             `Position: ${f.latitude}, ${f.longitude}`,
             `Track/Speed: ${trackStr} / ${speedStr}`,
+            `Altitude: ${altStr} ${vrStr}`,
         ];
         elm.textContent = infoLines.join('\n');
         elm.classList.remove('display--none');
