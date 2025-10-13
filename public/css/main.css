@@ -14,12 +14,11 @@ body {
 #app {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 8px;
 }
 
 header {
-    padding: 16px 0 16px 0;
-    margin-bottom: 16px;
+    padding: 0;
 }
 
 button {

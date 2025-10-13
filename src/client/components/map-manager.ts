@@ -8,7 +8,7 @@ export class MapManager {
         lat: this.airportCenterPoint.lat,
         lng: this.airportCenterPoint.lng,
     };
-    private readonly mapSizePixels = 800;
+    private readonly mapSizePixels = 700;
     public readonly SQUARE_SIZE_KM = 500;
     private readonly RANGE_RING_START_NM = 20;
     private readonly RANGE_RING_INTERVAL_NM = 20;
